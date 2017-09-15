@@ -3,7 +3,9 @@ package com.xiuxiuing.hotlook;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +13,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import android.widget.Toast;
+
+import com.xiuxiuing.hotlook.adapter.SimpleFragmentPagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +32,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.nav_view)
     NavigationView navView;
 
+    @BindView(R.id.sliding_tabs)
+    TabLayout tabLayout;
+
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
+
+    private SimpleFragmentPagerAdapter pagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +53,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
+
         navView.setNavigationItemSelectedListener(this);
 
 //        toolbar.setOnMenuItemClickListener(onMenuItemClickListener);
+
+        pagerAdapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), this);
+        viewPager.setAdapter(pagerAdapter);
+
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+
     }
 
     @Override
