@@ -17,6 +17,14 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.xiuxiuing.hotlook.adapter.SimpleFragmentPagerAdapter;
+import com.xiuxiuing.hotlook.bean.MobCategoryBean;
+import com.xiuxiuing.hotlook.core.CoreConsts;
+import com.xiuxiuing.hotlook.http.MobBaseRsp;
+import com.xiuxiuing.hotlook.http.OkHttpUtils;
+import com.xiuxiuing.hotlook.http.ServerCallback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.viewpager)
     ViewPager viewPager;
 
+    private List<MobCategoryBean> tabLists;
     private SimpleFragmentPagerAdapter pagerAdapter;
 
     @Override
@@ -47,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
+        tabLists = new ArrayList<>();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -58,11 +68,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 //        toolbar.setOnMenuItemClickListener(onMenuItemClickListener);
 
-        pagerAdapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), this);
-        viewPager.setAdapter(pagerAdapter);
 
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        OkHttpUtils.getInstance().get(CoreConsts.MOB_HTTP_CATEGORY, new ServerCallback<MobBaseRsp<List<MobCategoryBean>>, List<MobCategoryBean>>() {
+            @Override
+            public void onSuccess(final List<MobCategoryBean> datas) {
+                System.out.println("onSuccess");
+                tabLists = datas;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        pagerAdapter = new SimpleFragmentPagerAdapter(MainActivity.this, getSupportFragmentManager(), datas);
+                        viewPager.setAdapter(pagerAdapter);
+
+
+                        tabLayout.setupWithViewPager(viewPager);
+                        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailure(String errcode, String msg) {
+                System.out.println("onFailure");
+            }
+        });
 
     }
 
