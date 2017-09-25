@@ -1,4 +1,4 @@
-package com.xiuxiuing.hotlook;
+package com.xiuxiuing.hotlook.activity;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -11,11 +11,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import android.widget.Toast;
 
+import com.xiuxiuing.hotlook.R;
 import com.xiuxiuing.hotlook.adapter.SimpleFragmentPagerAdapter;
 import com.xiuxiuing.hotlook.bean.MobCategoryBean;
 import com.xiuxiuing.hotlook.core.CoreConsts;
@@ -29,10 +29,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
@@ -50,12 +48,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SimpleFragmentPagerAdapter pagerAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        toolbar.setTitleTextColor(Color.WHITE);
-        setSupportActionBar(toolbar);
+
+
         tabLists = new ArrayList<>();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -94,6 +90,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+    }
+
+    @Override
+    public int bindLayout() {
+        return R.layout.activity_main;
     }
 
     @Override

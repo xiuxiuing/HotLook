@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.xiuxiuing.hotlook.PageFragment;
+import com.xiuxiuing.hotlook.fragment.PageFragment;
 import com.xiuxiuing.hotlook.bean.MobCategoryBean;
 
 import java.util.List;

@@ -1,10 +1,12 @@
 package com.xiuxiuing.hotlook.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by wang on 2017/9/21.
  */
 
-public class MobPageItemBean {
+public class MobPageItemBean implements Serializable {
 
     private String cid;
     private String id;

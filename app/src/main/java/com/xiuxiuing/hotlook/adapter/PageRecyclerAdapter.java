@@ -1,6 +1,8 @@
 package com.xiuxiuing.hotlook.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xiuxiuing.hotlook.R;
+import com.xiuxiuing.hotlook.activity.WebActivity;
 import com.xiuxiuing.hotlook.bean.MobPageItemBean;
 
 import java.util.List;
@@ -37,12 +40,12 @@ public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(PageViewHolder holder, int position) {
+    public void onBindViewHolder(PageViewHolder holder, final int position) {
         holder.tvTitle.setText(lists.get(position).getTitle());
         holder.cvItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startWebActivity(position);
             }
         });
     }
@@ -66,5 +69,12 @@ public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapte
             ButterKnife.bind(this, itemView);
 
         }
+    }
+
+    private void startWebActivity(int position) {
+        Intent intent = new Intent();
+        intent.putExtra("web", lists.get(position));
+        intent.setClass(mContext, WebActivity.class);
+        mContext.startActivity(intent);
     }
 }
