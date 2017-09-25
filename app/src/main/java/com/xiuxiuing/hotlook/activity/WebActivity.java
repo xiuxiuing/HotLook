@@ -3,7 +3,6 @@ package com.xiuxiuing.hotlook.activity;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 
 import com.tencent.smtt.sdk.WebSettings;
@@ -13,7 +12,6 @@ import com.xiuxiuing.hotlook.R;
 import com.xiuxiuing.hotlook.bean.MobPageItemBean;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by wang on 2017/9/22.
